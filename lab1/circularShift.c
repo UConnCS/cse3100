@@ -11,7 +11,7 @@ long circular_shift(unsigned int a, int pos) {
 }
 
 int main() {
-    printf("\n%ld=2\n", circular_shift(1, 1));
-    printf("\n%ld=1024\n", circular_shift(1, 10));
-    printf("\n%ld=1\n", circular_shift(1, 1024));
+    printf("%ld=2\n", circular_shift(1, 1));
+    printf("%ld=1024\n", circular_shift(1, 10));
+    printf("%ld=1\n", circular_shift(1, 1024));
 }
