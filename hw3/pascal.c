@@ -25,8 +25,12 @@ int** pascal(int rows) {
         }
     }
 
-    for (int i = 2; i < rows; i++) {
-        for (int j = 1; j <= i; j++) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j <= i; j++) {
+            if (i == 0 || j == 0 || j == i) {
+                continue;
+            }
+            
             triangle[i][j] = triangle[i - 1][j - 1] + triangle[i - 1][j];
         }
     }
@@ -46,14 +50,13 @@ int** pascal(int rows) {
  *      that returned the given 'triangle' pointer
  */
 
-void free_memory( int** triangle, int rows )
-{
+void free_memory(int** triangle, int rows) {
     for (int i = 0; i < rows; i++) {
         free(triangle[i]);
     }
+
     free(triangle);
 }
-
 
 // DO NOT MODIFY CODE BELOW
 
@@ -61,8 +64,7 @@ void free_memory( int** triangle, int rows )
  * compute polynomial hash code with base 257 for a given array of unsigned chars
  */
 #define PRIME_BASE 257u
-unsigned int hash( unsigned char s[], int size )
-{  
+unsigned int hash(unsigned char s[], int size) {  
    unsigned int result = 0;
    
    // compute polynomial hash code using Horner's rule
@@ -72,42 +74,37 @@ unsigned int hash( unsigned char s[], int size )
    return result;
 }
 
-int main(void)
-{
-   int rows;
-   scanf("%d", &rows);
-   if(rows<0) {
-      fprintf(stderr, "Number of rows should be positive!\n");
-      return -1;
-   }
+int main(void) {
+    int rows;
+    scanf("%d", &rows);
+    if (rows<0) {
+        fprintf(stderr, "Number of rows should be positive!\n");
+        return -1;
+    }
 
-   int** triangle = pascal(rows);
-
-   if(rows <= 5) {
-      for(int i=0; i<rows; i++) {
-         for(int k=0; k< rows-i; k++)
+    int** triangle = pascal(rows);
+    if (rows <= 5) {
+        for(int i=0; i<rows; i++) {
+            for(int k=0; k< rows-i; k++)
             printf(" ");
-         for(int j=0; j<i; j++)
+            for(int j=0; j<i; j++)
             printf("%1d ", triangle[i][j]);
-         printf("%1d\n", triangle[i][i]);
-      }
-   }
-   else if (rows <= 10 ) {
-      printf("Row checksums: ");
-      for(int i=0; i<rows; i++)
-         printf("%u ", hash( (unsigned char*) triangle[i], (i+1)*sizeof(int) ) );
-      printf("\n");
-   }
-   else {
-      unsigned int checksum[rows];
-      for(int i=0; i<rows; i++)
-         checksum[i] = hash( (unsigned char*) triangle[i], (i+1)*sizeof(int) );
-      
-      printf("Checksum of row checksums: %u\n", hash( (unsigned char*) checksum, rows*sizeof(unsigned int) ) );
-   }
+            printf("%1d\n", triangle[i][i]);
+        }
+    } else if (rows <= 10) {
+        printf("Row checksums: ");
+        for(int i=0; i<rows; i++)
+            printf("%u ", hash( (unsigned char*) triangle[i], (i+1)*sizeof(int) ) );
+        printf("\n");
+    } else {
+        unsigned int checksum[rows];
+        for(int i=0; i<rows; i++)
+            checksum[i] = hash( (unsigned char*) triangle[i], (i+1)*sizeof(int) );
+        
+        printf("Checksum of row checksums: %u\n", hash( (unsigned char*) checksum, rows*sizeof(unsigned int) ) );
+    }
 
-   // free the triangle
-   free_memory( triangle, rows );
-
-   return 0;
+    // free the triangle
+    free_memory( triangle, rows );
+    return 0;
 }
