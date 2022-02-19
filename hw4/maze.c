@@ -3,7 +3,21 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <ctype.h>
-#include "maze.h"
+
+typedef struct MazeCell {
+   Item whatsHere; // Which item, if any, is present.
+   struct MazeCell* N;
+   struct MazeCell* S;
+   struct MazeCell* E;
+   struct MazeCell* W;
+} MazeCell;
+
+typedef enum Item {
+    NOTHING,
+    POTION,
+    SPELLBOOK,
+    WAND
+} Item;
 
 /**
  * Given a starting location in a maze, check if a given sequence of
@@ -127,7 +141,6 @@ MazeCell* ReadMaze(char* maze_file)
 
    return start;
 }
-
 
 #define MAX_FILE_NAME_LEN 100
 #define MAX_MOVES 100000
