@@ -10,7 +10,7 @@
 #include <assert.h>
 
 int main(int argc, char** argv) {
-    char *cmd = "/opt/homebrew/bin/python3";
+    char *cmd = "/usr/bin/python3";
     int in_fd[2];
     int out_fd[2];
 
@@ -47,8 +47,8 @@ int main(int argc, char** argv) {
                 return 1;
 
             // create the string "i ** j"
-            char* payload = malloc(sizeof(char) * (strlen(buf) + 1));
-            sprintf(payload, "%d ** %d\n", i, j);
+            char* payload = malloc(sizeof(char) * 1024);
+            sprintf(payload, "(%d) ** (%d)\n", i, j);
 
             // send the string to the child
             write(in_fd[1], payload, strlen(payload));
@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
         close(out_fd[0]);
         close(out_fd[1]);
 
-        printf("Child exit status: 0\n");
+        printf("Child exit status: 0");
         kill(pid, SIGTERM);
     }
 
