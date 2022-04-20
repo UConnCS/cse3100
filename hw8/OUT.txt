@@ -1,0 +1,2 @@
+Throwing 2000000 darts using 2 threads
+Pi approximation: 3.1425200000000002 Error: 0.0009273464102071
